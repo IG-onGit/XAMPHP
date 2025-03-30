@@ -1,12 +1,14 @@
-# XAMPHP v1.0.2
+# XAMPHP v1.0.3
 
 **Project**: XAMPHP
-<br>**Version**: 1.0.2
+<br>**Version**: 1.0.3
 <br>**OS**: Microsoft / Windows
 <br>**Author**: Irakli Gzirishvili
 <br>**Mail**: gziraklirex@gmail.com
 
 **XAMPHP** is a Python command-line interface application, designed to launch PHP projects via XAMPP engine from any location on your Windows machine as a virtual local host
+
+Disclaimer: XAMPHP CLI app is an independent open-source project (created by Irakli Gzirishvili) and is not affiliated with, endorsed by or officially associated with the PHP Group nor XAMPP.
 
 ## Installation
 
