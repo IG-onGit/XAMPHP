@@ -1,0 +1,11 @@
+bug:
+  description: "Something isn't working"
+  color: "9f3131"
+
+enhancement:
+  description: "A suggestion to improve the functionality"
+  color: "426797"
+
+question:
+  description: "A question regarding the project"
+  color: "429748"
