@@ -6,6 +6,14 @@ class index:
     def __init__(self, app="", cwd="", args=[]):
         self.app, self.cwd, self.args = app, cwd, args
 
+        if platform.system() != "Windows":
+            cli.error("XAMPHP is currently available only for Windows users")
+            sys.exit()
+
+        if not ctypes.windll.shell32.IsUserAnAdmin() != 0:
+            cli.error("Run your CMD as an administrator when using XAMPHP")
+            sys.exit()
+
         self.sources = os.path.join(self.app, ".system/sources")
         self.on = False
         pass

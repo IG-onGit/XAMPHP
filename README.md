@@ -1,7 +1,7 @@
-# XAMPHP v1.0.3
+# XAMPHP v1.0.4
 
 **Project**: XAMPHP
-<br>**Version**: 1.0.3
+<br>**Version**: 1.0.4
 <br>**OS**: Microsoft / Windows
 <br>**Author**: Irakli Gzirishvili
 <br>**Mail**: gziraklirex@gmail.com
@@ -9,6 +9,8 @@
 **XAMPHP** is a Python command-line interface application, designed to launch PHP projects via XAMPP engine from any location on your Windows machine as a virtual local host
 
 Disclaimer: XAMPHP CLI app is an independent open-source project (created by Irakli Gzirishvili) and is not affiliated with, endorsed by or officially associated with the PHP Group nor XAMPP.
+
+> Run your CMD as an administrator to use XAMPHP
 
 ## Installation
 
@@ -31,4 +33,4 @@ These are the available commands you can use:
 - App will edit file 'C:/Windows/System32/drivers/etc/hosts' to map local IP address (127.0.0.1) to the Virtual Host.
 - By default, app will reset these configurations after stopping the execution.
 
-> You will need to use `Run as administrator` when using this app via CMD.
+> You will need to use `Run as administrator` when using this app via CMD
