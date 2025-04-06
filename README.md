@@ -1,7 +1,7 @@
-# XAMPHP v1.0.4
+# XAMPHP v1.0.5
 
 **Project**: XAMPHP
-<br>**Version**: 1.0.4
+<br>**Version**: 1.0.5
 <br>**OS**: Microsoft / Windows
 <br>**Author**: Irakli Gzirishvili
 <br>**Mail**: gziraklirex@gmail.com
