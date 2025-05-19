@@ -7,6 +7,9 @@ on:
 
 jobs:
   Deploy:
+    if: |
+      github.ref == 'refs/heads/main' &&
+      !contains(github.event.head_commit.message, '[!deploy]')
     runs-on: windows-latest
 
     steps:
