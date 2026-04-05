@@ -1,2 +1,2 @@
-# {{cliname}}-hosts
-127.0.0.1   {{domain}}   # {{cliname}}-host
+# {{hint}}-hosts
+127.0.0.1   {{domain}}   # {{hint}}-host

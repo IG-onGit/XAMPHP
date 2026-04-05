@@ -3,96 +3,125 @@ from imports import *
 
 class Localhost:
     ####################################################################################// Load
-    def __init__(self, cliname="", sources="", current=""):
-        self.cliname = cliname
-        self.sources = sources
-        self.current = current
+    def __init__(self, hint="", open_tab=False, app_dir="", folder=""):
+        self.domain = ""
+        self.folder = folder
+        self.sources = app_dir + "/.system/sources"
+        self.hint = hint
+        self.open_tab = open_tab
         pass
 
     ####################################################################################// Main
-    def start(cliname="", sources="", current="", info={}):
-        if (
-            not cliname
-            or not os.path.exists(sources)
-            or not os.path.exists(current)
-            or not info
-        ):
+    def start(hint="", domain="", open_tab=False, app_dir="", folder=""):
+        if not hint or not domain or not app_dir:
             return False
 
-        obj = Localhost(cliname, sources, current)
-        return obj.__startLocalhost(info)
+        obj = Localhost(hint, open_tab, app_dir, folder)
+        obj.domain = domain
 
-    def stop(cliname="", sources="", current=""):
-        if not cliname or not os.path.exists(sources) or not os.path.exists(current):
+        return obj.startLocalhost()
+
+    def stop(hint="", domain="", app_dir="", folder=""):
+        if not hint or not app_dir:
             return False
 
-        obj = Localhost(cliname, sources, current)
-        obj.__stopLocalhost()
+        obj = Localhost(hint, False, app_dir, folder)
+        obj.domain = domain
+        obj.stopLocalhost()
         pass
 
-    def check():
+    def check(hint=""):
         apache = r"C:/xampp/apache/logs/httpd.pid"
         mysql = r"C:/xampp/mysql/data/mysql.pid"
 
         if not os.path.exists(apache) and not os.path.exists(mysql):
             return False
 
+        if len(hint) > 0:
+            content = cli.read("C:/xampp/apache/conf/extra/httpd-vhosts.conf")
+            pattern = rf"# {hint}-vhost(.*?)</VirtualHost>"
+            if len(content.strip()) > 0 and re.findall(pattern, content, re.DOTALL):
+                return True
+            return False
+
         return True
 
     ####################################################################################// Helpers
-    def __startLocalhost(self, config={}):
+    def startLocalhost(self):
         server = r"C:/xampp/xampp_start.exe"
 
         if not os.path.exists(server):
             cli.error("XAMPP not found: 'C:/xampp'")
             return False
 
-        if "domain" not in config or not config["domain"]:
+        if not self.domain:
             cli.error("Invalid domain name")
             return False
 
-        domain = config["domain"]
-        if not self.__setVirtualHost(domain):
+        if Localhost.check(self.hint):
+            return True
+
+        if Localhost.check():
+            cli.trace("Stopping XAMPP ...")
+            cli.command("C:/xampp/xampp_stop.exe", False, True)
+
+        if not self.setVirtualHost():
             return False
 
-        if not self.__setHost(domain):
+        if not self.setHost():
             return False
 
-        cli.done("Please wait ...")
-        if not self.__execute(server, "XAMPP started"):
-            return False
+        cli.info("Please wait ...")
+        cli.command(server, False, True)
 
         print()
-        cli.hint(f"Apache: http://{domain}")
-        cli.hint(f"MySQL: http://{domain}/phpmyadmin")
+        if not self.open_tab:
+            cli.done("Starting localhost ...")
+            return True
+
+        cli.hint(f"Apache: http://{self.domain}")
+        cli.hint(f"MySQL: http://{self.domain}/phpmyadmin")
         print()
 
-        webbrowser.open(f"http://{domain}")
+        webbrowser.open(f"http://{self.domain}/phpmyadmin")
+        webbrowser.open(f"http://{self.domain}")
 
         return True
 
-    def __stopLocalhost(self):
-        self.__resetVirtualHost()
-        self.__resetHost()
-
+    def stopLocalhost(self):
         server = r"C:/xampp/xampp_stop.exe"
         if not os.path.exists(server):
             cli.error("Not found: 'C:/xampp'")
             return False
 
-        if not Localhost.check():
-            cli.done("XAMPP is already stopped")
+        file = "C:/xampp/apache/conf/extra/httpd-vhosts.conf"
+        if not os.path.exists(file):
+            cli.error("Config not found: vhosts.conf")
+            return False
+
+        content = cli.read(file).strip()
+        if content and "ServerName " + self.domain not in content:
+            cli.trace("Project already stopped")
             return True
 
-        self.__execute(server, "XAMPP stopped", True)
-        pass
+        cli.trace("Stopping XAMPP ...")
+        cli.command(server, False, True)
 
-    def __setVirtualHost(self, domain=""):
-        if not domain:
+        self.resetVirtualHost()
+        self.resetHost()
+
+        if cli.read(file).strip():
+            cli.trace("Restarting XAMPP ...")
+            cli.command("C:/xampp/xampp_start.exe", False, True)
+
+        return True
+
+    def setVirtualHost(self):
+        if not self.domain:
             cli.error("Invalid VirtualHost domain")
             return False
 
-        self.__resetVirtualHost()
+        self.resetVirtualHost()
 
         file = "C:/xampp/apache/conf/extra/httpd-vhosts.conf"
         if not os.path.exists(file):
@@ -106,8 +135,7 @@ class Localhost:
 
         template = cli.read(tmpl)
         replaced = cli.template(
-            template,
-            {"cliname": self.cliname, "current": self.current, "domain": domain},
+            template, {"hint": self.hint, "current": self.folder, "domain": self.domain}
         )
         if not template or not replaced:
             cli.error("Invalid template content: vhosts.conf")
@@ -118,42 +146,40 @@ class Localhost:
             cli.error("Config failed: vhosts.conf")
             return False
 
-        cli.done("VirtualHost configured")
+        cli.trace("VirtualHost configured")
         return True
 
-    def __resetVirtualHost(self):
+    def resetVirtualHost(self):
         file = "C:/xampp/apache/conf/extra/httpd-vhosts.conf"
         if not os.path.exists(file):
             cli.error("Not found: vhosts.conf")
             return False
 
         content = cli.read(file)
-        pattern = rf"# {self.cliname}-vhost(.*?)</VirtualHost>"
+        pattern = rf"# {self.hint}-vhost(.*?)</VirtualHost>"
         matches = re.findall(pattern, content, re.DOTALL)
 
         if not matches:
             return True
         for match in matches:
             content = content.replace(
-                f"\n\n# {self.cliname}-vhost{match}</VirtualHost>", ""
+                f"\n\n# {self.hint}-vhost{match}</VirtualHost>", ""
             )
-            content = content.replace(
-                f"\n# {self.cliname}-vhost{match}</VirtualHost>", ""
-            )
+            content = content.replace(f"\n# {self.hint}-vhost{match}</VirtualHost>", "")
 
         if not cli.write(file, content):
             cli.error("Failed: vhosts.conf")
             return False
 
-        cli.done("VirtualHost removed")
+        cli.trace("VirtualHost removed")
         return True
 
-    def __setHost(self, domain=""):
-        if not domain:
+    def setHost(self):
+        if not self.domain:
             cli.error("Invalid Host domain")
             return False
 
-        self.__resetHost()
+        self.resetHost()
 
         file = "C:/Windows/System32/drivers/etc/hosts"
         if not os.path.exists(file):
@@ -166,60 +192,78 @@ class Localhost:
             return False
 
         template = cli.read(tmpl)
-        replaced = cli.template(template, {"cliname": self.cliname, "domain": domain})
+        replaced = cli.template(template, {"hint": self.hint, "domain": self.domain})
         if not template or not replaced:
             cli.error("Invalid template content: hosts")
             return False
 
         content = cli.read(file) + "\n\n" + replaced
-        if not cli.write(file, content):
+        if not self.write(file, content):
             cli.error("Config failed: hosts")
             return False
 
-        cli.done("Host configured")
+        cli.trace("Host configured")
         return True
 
-    def __resetHost(self):
+    def resetHost(self):
         file = "C:/Windows/System32/drivers/etc/hosts"
         if not os.path.exists(file):
             cli.error("Not found: hosts")
             return False
 
         content = cli.read(file)
-        pattern = rf"# {self.cliname}-hosts(.*?)# {self.cliname}-host"
+        pattern = rf"# {self.hint}-hosts(.*?)# {self.hint}-host"
         matches = re.findall(pattern, content, re.DOTALL)
 
         if not matches:
             return True
         for match in matches:
             content = content.replace(
-                f"\n\n# {self.cliname}-hosts{match}# {self.cliname}-host", ""
+                f"\n\n# {self.hint}-hosts{match}# {self.hint}-host", ""
             )
             content = content.replace(
-                f"\n# {self.cliname}-hosts{match}# {self.cliname}-host", ""
+                f"\n# {self.hint}-hosts{match}# {self.hint}-host", ""
             )
 
-        if not cli.write(file, content):
+        if not self.write(file, content):
             cli.error("Failed: hosts")
             return False
 
-        cli.done("Host removed")
+        cli.trace("Host removed")
         return True
 
-    def __execute(self, line="", message="", background=False):
-        if not line:
-            cli.error("Invalid CMD line")
+    def write(self, file: str, content: str):
+        if not ctypes.windll.shell32.IsUserAnAdmin() == 0:
+            return cli.write(file, content)
+
+        bat = os.path.join(self.sources, "write.bat")
+        if not cli.isFile(bat):
             return False
+
+        mod_time = os.path.getmtime(file)
+        tmp_path = ""
+
+        with tempfile.NamedTemporaryFile(
+            delete=False, mode="w", encoding="utf-8"
+        ) as tmp:
+            tmp.write(content)
+            tmp_path = tmp.name
 
         try:
-            if background:
-                subprocess.Popen(line, shell=True)
-            else:
-                subprocess.run(line, check=True)
-            cli.done(message)
-            return True
-        except subprocess.CalledProcessError:
-            cli.error(f"CMD Failed: {message}")
+            subprocess.run([bat, file, tmp_path], check=True, shell=True)
+            time.sleep(3)
+        finally:
+            if os.path.exists(tmp_path):
+                try:
+                    cli.trace(f"DELETING TEMP FILE: {tmp_path}")
+                    os.remove(tmp_path)
+                except FileNotFoundError:
+                    pass
+                except PermissionError:
+                    cli.error(f"COULD NOT REMOVE TEMP FILE: {tmp_path}")
+
+        if mod_time == os.path.getmtime(file):
+            cli.trace("Could not update file: " + file)
             return False
 
-        return False
+        return True

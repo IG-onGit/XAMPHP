@@ -6,6 +6,7 @@ import sys
 import time
 import ctypes
 import platform
+import tempfile
 import subprocess
 import webbrowser
 from datetime import datetime

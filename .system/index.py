@@ -10,38 +10,41 @@ class index:
             cli.error("XAMPHP is currently available only for Windows users")
             sys.exit()
 
-        if not ctypes.windll.shell32.IsUserAnAdmin() != 0:
-            cli.error("Run your CMD as an administrator when using XAMPHP")
-            sys.exit()
-
-        self.sources = os.path.join(self.app, ".system/sources")
         self.on = False
+        self.domain = ""
         pass
 
     def __exit__(self):
-        if Localhost.check():
-            if self.on:
-                cli.done(datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "\n")
-            self.stop()
+        if self.on:
+            print(datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "\n")
+        self.stop(self.domain)
         pass
 
     ####################################################################################// Main
     def start(self, domain=""):  # (domain) - Start the project with virtual domain
-        domain = "localhost" if not domain.strip() else domain.strip()
-        Localhost.start("xamphp", self.sources, self.cwd, {"domain": domain})
+        self.domain = "localhost" if not domain.strip() else domain.strip()
+        hint = "_".join(self.domain.split(".")[:-1]).lower().strip()
+
+        if not Localhost.start("xamphp_" + hint, self.domain, True, self.app, self.cwd):
+            cli.error("Localhost failed")
+            return False
 
         self.on = True
-        cli.done(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
         N = 0
         while True:
             N = 1 if N >= 3 else N + 1
-            cli.done(("." * N) + "      ", True)
+            cli.info(("." * N) + "      ", True)
             time.sleep(2)
         pass
 
-    def stop(self):  # Stop the project if it didn't
-        Localhost.stop("xamphp", self.sources, self.cwd)
+    def stop(self, domain=""):  # Stop the project if it didn't
+        cli.info("Please wait ...")
+
+        domain = "localhost" if not domain.strip() else domain.strip()
+        hint = "_".join(domain.split(".")[:-1]).lower().strip()
+        Localhost.stop("xamphp_" + hint, domain, self.app, self.cwd)
         pass
 
     ####################################################################################// Helpers
