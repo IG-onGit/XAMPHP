@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ig-ongit.github.io/XAMPHP/sitemap.xml

@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Documentation: Install, Commands and Config | XAMPHP</title>
+<meta name="description" content="XAMPHP documentation: install the Windows CLI with pip, start PHP projects on a virtual domain via XAMPP, and see commands, config files and requirements.">
+<meta name="keywords" content="XAMPHP documentation, xamphp start, XAMPP virtual host, httpd-vhosts.conf, Windows hosts file, PHP local domain, pip install xamphp, CLI reference">
+<meta name="author" content="Irakli Gzirishvili">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0c0907">
+<link rel="canonical" href="https://ig-ongit.github.io/XAMPHP/docs/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="XAMPHP">
+<meta property="og:title" content="Documentation: Install, Commands and Config | XAMPHP">
+<meta property="og:description" content="XAMPHP documentation: install the Windows CLI with pip, start PHP projects on a virtual domain via XAMPP, and see commands, config files and requirements.">
+<meta property="og:url" content="https://ig-ongit.github.io/XAMPHP/docs/">
+<meta property="og:image" content="https://ig-ongit.github.io/XAMPHP/assets/github.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="XAMPHP logo with the slogan: Serve any PHP folder on its own domain">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Documentation: Install, Commands and Config | XAMPHP">
+<meta name="twitter:description" content="XAMPHP documentation: install the Windows CLI with pip, start PHP projects on a virtual domain via XAMPP, and see commands, config files and requirements.">
+<meta name="twitter:image" content="https://ig-ongit.github.io/XAMPHP/assets/github.png">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "XAMPHP documentation", "description": "XAMPHP documentation: install the Windows CLI with pip, start PHP projects on a virtual domain via XAMPP, and see commands, config files and requirements.", "url": "https://ig-ongit.github.io/XAMPHP/docs/", "image": "https://ig-ongit.github.io/XAMPHP/assets/github.png", "inLanguage": "en", "author": {"@type": "Person", "name": "Irakli Gzirishvili", "jobTitle": "Full-Stack Software Engineer", "sameAs": ["https://github.com/IG-onGit", "https://www.linkedin.com/in/ig-link", "https://x.com/IG_onX", "https://www.linkedin.com/newsletters/creatron-7275978973124132864"]}}</script>
+<script src="../assets/main.js" defer></script>
+</head>
+<body class="docs-page">
+<a class="skip" href="#main">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol><symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol><symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol><symbol id="i-folder" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol><symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol><symbol id="i-terminal" viewBox="0 0 24 24"><path d="m4 17 6-6-6-6"/><path d="M12 19h8"/></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol><symbol id="i-server" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol><symbol id="i-cpu" viewBox="0 0 24 24"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></symbol><symbol id="i-github" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></symbol><symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol><symbol id="i-scale" viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></symbol><symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></symbol><symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></symbol><symbol id="i-twitter-x" viewBox="0 0 24 24"><path d="M4 4l16 16M20 4 4 20"/></symbol><symbol id="i-home" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol><symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol><symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/></symbol></defs></svg>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="../" aria-label="XAMPHP home"><img src="../assets/logo.svg" width="34" height="34" alt=""><strong>XAM<span>PHP</span></strong></a>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="../#features">Features</a>
+      <a href="../#how">How it works</a>
+      <a href="../#usage">Usage</a>
+      <a href="../#faq">FAQ</a>
+      <a href="./">Docs</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/IG-onGit/XAMPHP" rel="noopener"><svg class="icon " aria-hidden="true"><use href="#i-github"/></svg> GitHub</a>
+    </nav>
+    <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="docs-nav"><svg class="icon i-menu" aria-hidden="true"><use href="#i-menu"/></svg><svg class="icon i-x" aria-hidden="true"><use href="#i-x"/></svg></button>
+  </div>
+</header>
+<div class="container docs-wrap">
+  <aside class="docs-nav" id="docs-nav" aria-label="Documentation sections">
+<h4>Getting started</h4>
+<a href="#general" data-section="general">General</a>
+<a href="#how-it-works" data-section="how-it-works">How it works</a>
+<a href="#installation" data-section="installation">Installation</a>
+<a href="#configuration" data-section="configuration">Configuration</a>
+<h4>Reference</h4>
+<a href="#commands" data-section="commands">Commands</a>
+<a href="#messages" data-section="messages">Messages</a>
+<a href="#structure" data-section="structure">Project structure</a>
+<h4>Project</h4>
+<a href="#requirements" data-section="requirements">Requirements</a>
+<a href="#license" data-section="license">License</a>
+<a href="#author" data-section="author">About the author</a>
+<div class="mobile-only"><h4>Site</h4><a href="../">Back to home</a><a href="https://github.com/IG-onGit/XAMPHP" rel="noopener">GitHub</a></div>
+  </aside>
+  <main id="main">
+<article class="doc-section active" id="general">
+<h1>General</h1>
+<p><strong>XAMPHP</strong> is a Python command-line application, designed to launch PHP projects via the XAMPP engine from any location on your Windows machine as a virtual local host.</p>
+<h2>Why use it</h2>
+<ul>
+  <li><strong>Any location.</strong> Run it in the folder that holds your PHP project; that folder is used as the Apache document root.</li>
+  <li><strong>A real domain.</strong> The project opens at the domain you give it instead of <code>localhost/some-folder</code>.</li>
+  <li><strong>Automatic setup.</strong> It writes the VirtualHost and the hosts entry so you never edit them by hand.</li>
+  <li><strong>Reset by default.</strong> The configuration is reset after stopping the execution.</li>
+  <li><strong>Free.</strong> MIT licensed and installed with <code>pip</code>.</li>
+</ul>
+<div class="callout "><svg class="icon " aria-hidden="true"><use href="#i-info"/></svg><p>Next: see <a href='#how-it-works' data-goto='how-it-works'>How it works</a>, then <a href='#installation' data-goto='installation'>Installation</a>. Run your CMD as an administrator to use XAMPHP.</p></div>
+<p class="intro">Disclaimer: XAMPHP is an independent open-source project (created by Irakli Gzirishvili) and is not affiliated with, endorsed by or officially associated with the PHP Group nor XAMPP.</p>
+
+<div class="pager"><a class="btn btn-ghost next" href="#how-it-works" data-goto="how-it-works">How it works <svg class="icon " aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+</article>
+<article class="doc-section" id="how-it-works">
+<h1>How it works</h1>
+<p>When you run <code>xamphp start (domain)</code>, XAMPHP follows these steps, taken from its source:</p>
+<ol>
+  <li>It checks that it runs on Windows and that XAMPP's <code>C:/xampp/xampp_start.exe</code> exists.</li>
+  <li>It builds a marker from the domain: the domain without its last label, lower-cased, prefixed with <code>xamphp_</code> (for <code>shop.local</code> that is <code>xamphp_shop</code>).</li>
+  <li>If XAMPP is already running with a different setup, it stops it first.</li>
+  <li>It appends a VirtualHost block to <code>httpd-vhosts.conf</code>, with your current folder as <code>DocumentRoot</code>.</li>
+  <li>It appends <code>127.0.0.1</code> plus your domain to the Windows <code>hosts</code> file.</li>
+  <li>It starts XAMPP, then opens <code>http://domain/phpmyadmin</code> and <code>http://domain</code> in your browser.</li>
+  <li>When the execution stops, it stops XAMPP, removes the blocks it added and restarts XAMPP if the vhosts file still has content.</li>
+</ol>
+<pre><code data-lang="text" data-title="data flow">your PHP folder
+      |
+      v
+xamphp start shop.local
+      |-- httpd-vhosts.conf   + VirtualHost -&gt; your folder
+      |-- hosts               + 127.0.0.1 shop.local
+      &#x27;-- xampp_start.exe     starts XAMPP
+                |
+                v
+   http://shop.local        http://shop.local/phpmyadmin</code></pre>
+
+<div class="pager"><a class="btn btn-ghost prev" href="#general" data-goto="general"><svg class="icon " aria-hidden="true"><use href="#i-arrow-left"/></svg> General</a><a class="btn btn-ghost next" href="#installation" data-goto="installation">Installation <svg class="icon " aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+</article>
+<article class="doc-section" id="installation">
+<h1>Installation</h1>
+<p>XAMPHP is installed from PyPI with <code>pip</code>. XAMPP must already be installed in <code>C:/xampp</code>.</p>
+<ol>
+  <li>Open CMD and install the package, then restart your CMD:</li>
+</ol>
+<pre><code data-lang="bash" data-title="Command Prompt">pip install xamphp</code></pre>
+<ol start="2">
+  <li>Check that XAMPHP is installed correctly by running its name. It lists the available commands:</li>
+</ol>
+<pre><code data-lang="bash" data-title="Command Prompt">xamphp</code></pre>
+<div class="callout warn"><svg class="icon " aria-hidden="true"><use href="#i-alert"/></svg><p>Run your CMD as an administrator before using XAMPHP. It edits files that normal users cannot write.</p></div>
+
+<div class="pager"><a class="btn btn-ghost prev" href="#how-it-works" data-goto="how-it-works"><svg class="icon " aria-hidden="true"><use href="#i-arrow-left"/></svg> How it works</a><a class="btn btn-ghost next" href="#configuration" data-goto="configuration">Configuration <svg class="icon " aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+</article>
+<article class="doc-section" id="configuration">
+<h1>Configuration</h1>
+<p>XAMPHP has no settings file of its own. Its only option is the domain you pass to <code>start</code>, which defaults to <code>localhost</code>. What it configures are two files:</p>
+<div class="table-wrap"><table><thead><tr><th>File</th><th>What XAMPHP adds</th><th>When it is reset</th></tr></thead><tbody><tr><td><code>C:/xampp/apache/conf/extra/httpd-vhosts.conf</code></td><td>A VirtualHost block marked <code># &lt;hint&gt;-vhost</code></td><td>After stopping the execution</td></tr><tr><td><code>C:/Windows/System32/drivers/etc/hosts</code></td><td>A line mapping <code>127.0.0.1</code> to your domain, marked <code># &lt;hint&gt;-hosts</code></td><td>After stopping the execution</td></tr></tbody></table></div>
+<h2>Templates</h2>
+<p>Both entries come from templates in <code>.system/sources</code>. <code>{{hint}}</code>, <code>{{current}}</code> and <code>{{domain}}</code> are replaced with the marker, your current folder and your domain.</p>
+<pre><code data-lang="apache" data-title="vhosts.conf"># {{hint}}-vhost
+&lt;VirtualHost *:80&gt;
+    DocumentRoot &quot;{{current}}&quot;
+    ServerName {{domain}}
+    &lt;Directory &quot;{{current}}&quot;&gt;
+        AllowOverride All
+        Require all granted
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;</code></pre>
+<pre><code data-lang="text" data-title="hosts"># {{hint}}-hosts
+127.0.0.1   {{domain}}   # {{hint}}-host</code></pre>
+
+<div class="pager"><a class="btn btn-ghost prev" href="#installation" data-goto="installation"><svg class="icon " aria-hidden="true"><use href="#i-arrow-left"/></svg> Installation</a><a class="btn btn-ghost next" href="#commands" data-goto="commands">Commands <svg class="icon " aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+</article>
+<article class="doc-section" id="commands">
+<h1>Commands</h1>
+<p>These are the commands you can use after installing XAMPHP:</p>
+<div class="table-wrap"><table><thead><tr><th>Command</th><th>What it does</th></tr></thead><tbody><tr><td><code>xamphp</code></td><td>Lists the available commands</td></tr><tr><td><code>xamphp start (domain)</code></td><td>Starts the project with a virtual domain. Without a domain, <code>localhost</code> is used</td></tr><tr><td><code>xamphp stop</code></td><td>Stops the project if it did not stop by itself</td></tr></tbody></table></div>
+<h2>Example</h2>
+<pre><code data-lang="bash" data-title="Command Prompt (administrator)">cd C:\projects\shop
+xamphp start shop.local</code></pre>
+<p>When it is up, XAMPHP prints the Apache and MySQL (phpMyAdmin) addresses and opens both in your browser.</p>
+
+<div class="pager"><a class="btn btn-ghost prev" href="#configuration" data-goto="configuration"><svg class="icon " aria-hidden="true"><use href="#i-arrow-left"/></svg> Configuration</a><a class="btn btn-ghost next" href="#messages" data-goto="messages">Messages <svg class="icon " aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+</article>
+<article class="doc-section" id="messages">
+<h1>Messages</h1>
+<p>These messages come from the source code and tell you what to fix:</p>
+<div class="table-wrap"><table><thead><tr><th>Message</th><th>Meaning</th></tr></thead><tbody><tr><td><code>XAMPHP is currently available only for Windows users</code></td><td>XAMPHP started on another operating system and exited</td></tr><tr><td><code>XAMPP not found: 'C:/xampp'</code></td><td><code>xampp_start.exe</code> was not found in <code>C:/xampp</code></td></tr><tr><td><code>Invalid domain name</code></td><td>The domain was empty after processing</td></tr><tr><td><code>Config not found: vhosts.conf</code></td><td><code>httpd-vhosts.conf</code> is missing from XAMPP's Apache config folder</td></tr><tr><td><code>Config failed: hosts</code></td><td>The hosts file could not be updated, usually because the CMD is not elevated</td></tr><tr><td><code>Project already stopped</code></td><td>No VirtualHost for that domain was found, so there was nothing to reset</td></tr><tr><td><code>Localhost failed</code></td><td>Start did not complete, see the line printed before it</td></tr></tbody></table></div>
+
+<div class="pager"><a class="btn btn-ghost prev" href="#commands" data-goto="commands"><svg class="icon " aria-hidden="true"><use href="#i-arrow-left"/></svg> Commands</a><a class="btn btn-ghost next" href="#structure" data-goto="structure">Project structure <svg class="icon " aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+</article>
+<article class="doc-section" id="structure">
+<h1>Project structure</h1>
+<p>The whole application lives in the <code>.system</code> folder of the repository.</p>
+<pre><code data-lang="text" data-title="repository">XAMPHP/
+|-- .system/
+|   |-- index.py            start and stop commands
+|   |-- imports.py          shared imports
+|   |-- modules/
+|   |   &#x27;-- localhost.py    VirtualHost and hosts logic
+|   &#x27;-- sources/
+|       |-- vhosts.conf     VirtualHost template
+|       |-- hosts           hosts-file template
+|       |-- write.bat       admin helper for writing files
+|       |-- clight.json     package metadata
+|       &#x27;-- logo.ico        app icon
+|-- .github/workflows/publish.yml
+|-- LICENSE
+&#x27;-- README.md</code></pre>
+<p><code>write.bat</code> is used when the CMD is not elevated: it restarts itself as administrator to copy the new hosts content into place.</p>
+
+<div class="pager"><a class="btn btn-ghost prev" href="#messages" data-goto="messages"><svg class="icon " aria-hidden="true"><use href="#i-arrow-left"/></svg> Messages</a><a class="btn btn-ghost next" href="#requirements" data-goto="requirements">Requirements <svg class="icon " aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+</article>
+<article class="doc-section" id="requirements">
+<h1>System requirements</h1>
+<h2>To run XAMPHP</h2>
+<div class="table-wrap"><table><thead><tr><th>Requirement</th><th>Details</th></tr></thead><tbody><tr><td>Operating system</td><td>Microsoft Windows</td></tr><tr><td>XAMPP</td><td>Installed in <code>C:/xampp</code> (uses <code>xampp_start.exe</code> and <code>xampp_stop.exe</code>)</td></tr><tr><td>Python</td><td>Python with <code>pip</code>, to run <code>pip install xamphp</code></td></tr><tr><td>Permissions</td><td>A CMD run as administrator</td></tr></tbody></table></div>
+<h2>To build from source</h2>
+<ul>
+  <li>Clone <a href="https://github.com/IG-onGit/XAMPHP" rel="noopener">the repository</a>; the code is in <code>.system</code>.</li>
+  <li>The repository's workflow publishes the package to PyPI from a Windows runner with Python 3.11, using the <code>clight</code> tool.</li>
+</ul>
+
+<div class="pager"><a class="btn btn-ghost prev" href="#structure" data-goto="structure"><svg class="icon " aria-hidden="true"><use href="#i-arrow-left"/></svg> Project structure</a><a class="btn btn-ghost next" href="#license" data-goto="license">License <svg class="icon " aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+</article>
+<article class="doc-section" id="license">
+<h1>License</h1>
+<p>XAMPHP is released under the <strong>MIT License</strong>. In plain English: you may use, copy, modify, merge, publish, distribute, sublicense and sell it, as long as the copyright and permission notice stay with it. It comes with no warranty.</p>
+<div class="license-box" tabindex="0" role="region" aria-label="Full MIT license text">MIT License
+
+Copyright (c) 2025 Irakli Gzirishvili
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</div>
+<a class="btn btn-ghost btn-sm" href="https://github.com/IG-onGit/XAMPHP/blob/main/LICENSE" rel="noopener"><svg class="icon " aria-hidden="true"><use href="#i-github"/></svg> View LICENSE on GitHub</a>
+
+<div class="pager"><a class="btn btn-ghost prev" href="#requirements" data-goto="requirements"><svg class="icon " aria-hidden="true"><use href="#i-arrow-left"/></svg> Requirements</a><a class="btn btn-ghost next" href="#author" data-goto="author">About the author <svg class="icon " aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+</article>
+<article class="doc-section" id="author">
+<h1>About the author</h1>
+<div class="author-card">
+  <img src="../assets/Irakli%20Gzirishvili.png" width="120" height="120" alt="Portrait of Irakli Gzirishvili" loading="lazy">
+  <div><h3>Irakli Gzirishvili <span style="color: var(--muted);font-weight: normal;">- From Georgia</span></h3><p>• AI &amp; Cloud Engineer<br>• AI Integration Manager<br>• Full-Stack Software Engineer<br>• MIT OSS Provider<br>• DevOps Engineer</p></div>
+</div>
+<div class="links">
+  <a class="btn btn-ghost btn-sm" href="https://github.com/IG-onGit" rel="me noopener"><svg class="icon " aria-hidden="true"><use href="#i-github"/></svg> github.com/IG-onGit</a>
+  <a class="btn btn-ghost btn-sm" href="https://www.linkedin.com/in/ig-link" rel="me noopener"><svg class="icon " aria-hidden="true"><use href="#i-linkedin"/></svg> LinkedIn</a>
+  <a class="btn btn-ghost btn-sm" href="https://x.com/IG_onX" rel="me noopener"><svg class="icon " aria-hidden="true"><use href="#i-twitter-x"/></svg> X</a>
+  <a class="btn btn-ghost btn-sm" href="https://www.linkedin.com/newsletters/creatron-7275978973124132864" rel="me noopener"><svg class="icon " aria-hidden="true"><use href="#i-book"/></svg> CreaTron newsletter</a>
+</div>
+
+<div class="pager"><a class="btn btn-ghost prev" href="#license" data-goto="license"><svg class="icon " aria-hidden="true"><use href="#i-arrow-left"/></svg> License</a></div>
+</article>
+  </main>
+</div>
+<footer class="site-footer">
+  <div class="container">
+    <p>Copyright (c) 2025 Irakli Gzirishvili. Released under the MIT License.</p>
+    <nav aria-label="Footer">
+      <a href="../docs/">Documentation</a>
+      <a href="../docs/#requirements">Requirements</a>
+      <a href="../docs/#license">License</a>
+      <a href="https://github.com/IG-onGit/XAMPHP" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>
